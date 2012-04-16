@@ -49,6 +49,7 @@ object PyramidWarmup extends GameBase {
     //screen.clear()
     screen.filter(hueFilter() _ )
     screen.drawPixel(posX.toInt, posY.toInt, Color.WHITE.getRGB)
+    screen.drawRect(posX.toInt, posY.toInt, 1000, 2000, ColorUtils.createRGBAColor(0.8f, 0.6f, 0.1f, 0.4f), true)
     screen.drawRaster(pic, posX.toInt, posY.toInt, true)
   }
 

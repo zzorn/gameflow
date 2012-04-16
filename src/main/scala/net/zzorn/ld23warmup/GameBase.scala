@@ -2,11 +2,15 @@ package net.zzorn.ld23warmup
 
 import net.zzorn.utils.gfx.Raster
 import net.zzorn.utils.{ParameterChecker, Area, FastImagePanel, SimpleFrame}
+import javax.swing.SwingUtilities
+import com.sun.java.swing.SwingUtilities3
+import sun.swing.SwingUtilities2
 
 /**
  * Extend this in an object, and implement update, render, and optionally setup and shutdown.
  */
 // TODO: Map background drawing, cache background to raster, update on change or resize, draw from background when sprites move on foreground
+// TODO: Checkout double buffering tutorial http://www.cokeandcode.com/info/tut2d.html  http://content.gpwiki.org/index.php/Java:Tutorials:Double_Buffering  http://docs.oracle.com/javase/tutorial/extra/fullscreen/doublebuf.html
 class GameBase(initialTargetFps: Double = 30.0) {
 
   private val SecondsToNanoseconds: Double = 1000000000.0
