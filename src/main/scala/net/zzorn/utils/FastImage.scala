@@ -3,13 +3,14 @@ package net.zzorn.utils
 import gfx.Raster
 import java.awt.image.{BufferedImage, DirectColorModel, MemoryImageSource}
 import java.awt.{Color, Graphics, Toolkit, Image}
+import ParameterChecker._
 
 /**
  * Fast, low level access image container.
  */
 class FastImage(val width: Int, val height: Int) {
-  require(width > 0, "Width should be positive")
-  require(height > 0, "Height should be positive")
+  requirePositive(width,  'width)
+  requirePositive(height, 'height)
 
   private var imageSource: MemoryImageSource = null
   private var _image: Image = null
@@ -19,9 +20,6 @@ class FastImage(val width: Int, val height: Int) {
   initialize()
 
   private def initialize() {
-
-    // Don't include alpha for normal on screen rendering, as it takes longer due to masking
-    //val rgbColorModel: DirectColorModel = new DirectColorModel(32, 0xff0000, 0x00ff00, 0x0000ff, 0xff000000)
     val rgbColorModel: DirectColorModel = new DirectColorModel(24, 0xff0000, 0x00ff00, 0x0000ff)
 
     _raster = Raster(width, height)

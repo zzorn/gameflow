@@ -30,6 +30,8 @@ final class Area() {
   def y1 = minY
   def x2 = maxX
   def y2 = maxY
+  def w = getWidth
+  def h = getHeight
 
   def isEmpty = empty
   def getMinX = minX

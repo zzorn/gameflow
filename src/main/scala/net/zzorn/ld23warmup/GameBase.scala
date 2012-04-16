@@ -6,6 +6,7 @@ import net.zzorn.utils.{ParameterChecker, Area, FastImagePanel, SimpleFrame}
 /**
  * Extend this in an object, and implement update, render, and optionally setup and shutdown.
  */
+// TODO: Map background drawing, cache background to raster, update on change or resize, draw from background when sprites move on foreground
 class GameBase(initialTargetFps: Double = 30.0) {
 
   private val SecondsToNanoseconds: Double = 1000000000.0

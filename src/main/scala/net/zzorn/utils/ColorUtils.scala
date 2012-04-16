@@ -40,7 +40,7 @@ object ColorUtils {
 
   }
 
-  def mixRGBWithAlpha(topColor: Int, bottomColor: Int): Int = {
+  @inline def mixRGBWithAlpha(topColor: Int, bottomColor: Int): Int = {
 
     /* old partially float version
         val topAlpha = getAlpha(topColor)
@@ -73,9 +73,9 @@ object ColorUtils {
     val b = (((bottomColor >> 0) & 0xff) * (255 - topAlpha) + ((topColor >> 0) & 0xff) * topAlpha) / 255
 
     return ((a & 0xFF) << 24) |
-      ((r & 0xFF) << 16) |
-      ((g & 0xFF) << 8) |
-      ((b & 0xFF) << 0)
+           ((r & 0xFF) << 16) |
+           ((g & 0xFF) << 8) |
+           ((b & 0xFF) << 0)
   }
 
   def mixRGBWithAlpha(topR: Float, topG: Float, topB: Float, topA: Float,
