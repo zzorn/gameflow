@@ -27,8 +27,7 @@ class FastImagePanel extends JPanel {
   def raster: Raster = _fastImage.raster
 
   override def paintComponent(g: Graphics) {
-    _fastImage.renderToGraphics(g)
-    //_fastImage.renderToGraphics(g, _fastImage.raster.getUpdatedArea)
+    _fastImage.renderToGraphics(g, _fastImage.raster.getUpdatedArea)
     _fastImage.raster.clearUpdatedArea()
   }
 

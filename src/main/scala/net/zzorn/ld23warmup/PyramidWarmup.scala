@@ -16,11 +16,11 @@ object PyramidWarmup extends GameBase {
   private var velY = 0.0
 
   override protected def setup() {
-    velX = 5.0
+    velX = 25.0
   }
 
   override protected def update(durationSec: Double) {
-    velY += 1.0 *  durationSec
+    velY += 9.0 *  durationSec
 
     posX += velX * durationSec
     posY += velY * durationSec
@@ -34,6 +34,7 @@ object PyramidWarmup extends GameBase {
   }
 
   override protected def render(screen: Raster) {
+    screen.clear()
     screen.setPixel(posX.toInt, posY.toInt, Color.WHITE.getRGB)
   }
 

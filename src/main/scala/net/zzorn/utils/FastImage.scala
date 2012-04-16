@@ -38,6 +38,7 @@ class FastImage(val width: Int, val height: Int) {
   def image: Image = _image
 
   def renderToGraphics(context: Graphics) {
+    _image.flush()
     context.drawImage(_image, 0, 0, null)
   }
 
@@ -48,6 +49,7 @@ class FastImage(val width: Int, val height: Int) {
   }
 
   def renderToGraphics(context: Graphics, x1: Int, y1: Int, x2: Int, y2: Int) {
+    _image.flush()
     context.drawImage(_image,
                       x1, y1, x2, y2,
                       x1, y1, x2, y2,
@@ -65,6 +67,7 @@ class FastImage(val width: Int, val height: Int) {
 
     //        buf.getGraphics.drawImage(transparentImage, 0, 0, null)
 
+    _image.flush()
     buf.getGraphics.drawImage(_image, 0, 0, null)
 
     buf

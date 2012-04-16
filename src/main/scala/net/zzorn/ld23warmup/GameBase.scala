@@ -57,13 +57,7 @@ class GameBase(initialTargetFps: Double = 30.0) {
         render(screen)
 
         // Force a repaint that copies the rendered screen raster to the visible screen
-        _screenPanel.revalidate()
-        _screenPanel.invalidate()
         _screenPanel.repaint()
-        frame.repaint()
-        frame.invalidate()
-        frame.validate()
-
       }
 
       shutdown()
