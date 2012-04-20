@@ -28,3 +28,8 @@ libraryDependencies += "log4j" % "log4j" % "1.2.16"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.7.2" % "test"
 
+
+// Config files:
+
+libraryDependencies += "org.yaml" % "snakeyaml" % "1.11-SNAPSHOT"
+

@@ -13,6 +13,11 @@
 3-> Mouse input
 
 
+3.5 -> Sound effects
+
+3.6 -> Music
+
+
 Allow resizable game canvas?  Or make it non-resizable.
 
 GameMap

@@ -54,6 +54,9 @@ class GameBase(title: String = "GameFlow",
     if (!running) {
       running = true
 
+      // Setup logging
+      Logging.initializeLogging(getClass.getPackage.getName, "net.zzorn")
+
       createScreen()
 
       init()
