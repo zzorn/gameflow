@@ -1,26 +1,33 @@
 package net.zzorn.gameflow
 
+import net.zzorn.utils._
 import net.zzorn.utils.gfx.Raster
-import net.zzorn.utils.{ParameterChecker, Area, FastImagePanel, SimpleFrame}
-import java.awt.{Color, Graphics2D}
+import picture.PictureManager
+import java.awt.{Graphics2D, Color}
 
 /**
- * Extend this in an object, and implement update, render, and optionally setup and shutdown.
+ * Extend this in an object, and implement update, render, and optionally init and shutdown.
  */
 // TODO: Map background drawing, cache background to raster, update on change or resize, draw from background when sprites move on foreground
 // TODO: Checkout double buffering tutorial http://www.cokeandcode.com/info/tut2d.html  http://content.gpwiki.org/index.php/Java:Tutorials:Double_Buffering  http://docs.oracle.com/javase/tutorial/extra/fullscreen/doublebuf.html
-class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, defaultWidth: Int = 800, defaultHeight: Int = 600) {
+class GameBase(title: String = "GameFlow",
+               initialTargetFps: Double = 200.0,
+               defaultWidth: Int = 800,
+               defaultHeight: Int = 600,
+               picturePath: String = "") {
 
-  private val SecondsToNanoseconds: Double = 1000000000.0
-  private val NanosecondsToSeconds: Double = 1.0 / SecondsToNanoseconds
-  private val NanosecondsToMilliseconds: Double = 1.0 / 1000000.0
+  final private val SecondsToNanoseconds: Double = 1000000000.0
+  final private val NanosecondsToSeconds: Double = 1.0 / SecondsToNanoseconds
+  final private val NanosecondsToMilliseconds: Double = 1.0 / 1000000.0
 
-  private var running = false
-  private var lastTimestamp = 0L
-  private var _frame: SimpleFrame = null
-  private var _canvas: GameCanvas = null
-  private var _currentFps: Double = 0.0
-  private var _targetFps: Double = 0.0
+  final private var running = false
+  final private var lastTimestamp = 0L
+  final private var _frame: SimpleFrame = null
+  final private var _canvas: GameCanvas = null
+  final private var _currentFps: Double = 0.0
+  final private var _targetFps: Double = 0.0
+
+  final private val _pictureStore: PictureManager = new PictureManager(picturePath)
 
   targetFps = initialTargetFps
 
@@ -31,11 +38,12 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
     start()
   }
 
-  def canvas: GameCanvas = _canvas
-  def frame: SimpleFrame = _frame
-  def currentFps: Double = _currentFps
-  def targetFps = _targetFps
-  def targetFps_=(targetFps: Double) {
+  final def pictureStore: PictureManager = _pictureStore
+  final def canvas: GameCanvas = _canvas
+  final def frame: SimpleFrame = _frame
+  final def currentFps: Double = _currentFps
+  final def targetFps = _targetFps
+  final def targetFps_=(targetFps: Double) {
     ParameterChecker.requirePositive(targetFps, 'targetFps)
     _targetFps = targetFps
   }
@@ -49,7 +57,7 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
 
       createScreen()
 
-      setup()
+      init()
 
       while (running) {
         var duration = tickClock()
@@ -57,10 +65,10 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
         update(duration)
 
         var surface: Graphics2D = canvas.acceleratedSurface
-        surface.setColor(Color.black);
-        surface.fillRect(0,0,800,600);
+        //surface.setColor(Color.black);
+        //surface.fillRect(0,0,800,600);
 
-        render(surface)
+        draw(surface, canvas.getWidth, canvas.getHeight)
 
         // We'll need to manually dispose the graphics
         surface.dispose()
@@ -83,7 +91,7 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
   /**
    * Called before the main loop starts, after the screen has been created.
    */
-  protected def setup() {}
+  protected def init() {}
 
   /**
    * Called once in each mainloop, immediately before render.
@@ -95,7 +103,7 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
    * Render the game contents to the specified screen raster.
    * @param screen the graphics to render to.
    */
-  protected def render(screen: Graphics2D) {}
+  protected def draw(screen: Graphics2D, screenW: Int, screenH: Int) {}
 
   /**
    * Called after the mainloop has terminated, and before the program exits.
@@ -105,14 +113,14 @@ class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, def
   protected def shutdown() {}
 
 
-  private def createScreen() {
+  final private def createScreen() {
     _canvas = new GameCanvas()
     _frame = new SimpleFrame(title, _canvas, defaultWidth, defaultHeight)
     _canvas.setup()
   }
 
 
-  private def tickClock(): Double = {
+  final private def tickClock(): Double = {
 
     // Sleep any extra required time
     if (lastTimestamp != 0) {

@@ -1,5 +1,6 @@
 package net.zzorn.utils
 
+import net.zzorn.utils.Raster
 import gfx.Raster
 import javax.swing.JPanel
 import java.awt.Graphics
@@ -10,7 +11,7 @@ import java.awt.event.{ComponentAdapter, ComponentEvent}
  */
 class FastImagePanel extends JPanel {
 
-  private var _fastImage: FastImage = null
+  private var _fastImage: RawImage = null
 
   addComponentListener(new ComponentAdapter {
 
@@ -23,7 +24,7 @@ class FastImagePanel extends JPanel {
     }
   })
 
-  def fastImage: FastImage = _fastImage
+  def fastImage: RawImage = _fastImage
   def raster: Raster = _fastImage.raster
 
   override def paintComponent(g: Graphics) {
@@ -33,7 +34,7 @@ class FastImagePanel extends JPanel {
 
 
   def buildFastImage() {
-    _fastImage = new FastImage(getWidth, getHeight)
+    _fastImage = new RawImage(getWidth, getHeight)
     _fastImage.raster.markDirty()
   }
 

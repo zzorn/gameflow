@@ -1,4 +1,4 @@
-package net.zzorn.utils.gfx
+package net.zzorn.utils
 
 import java.awt.Color
 import net.zzorn.utils.ParameterChecker._
@@ -46,8 +46,8 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
    */
   @inline final def drawPixel(x: Int, y: Int, color: Int) {
     if (x >= 0 && x < width &&
-        y >= 0 && y < height) {
-      data(x + y*width) = color
+      y >= 0 && y < height) {
+      data(x + y * width) = color
       updatedArea.includePoint(x, y)
     }
   }
@@ -57,7 +57,7 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
    * Does not update the updatedArea (that is left for the caller to do).
    */
   @inline final def drawPixelRaw(x: Int, y: Int, color: Int) {
-    data(x + y*width) = color
+    data(x + y * width) = color
   }
 
   /**
@@ -175,12 +175,12 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
     }
 
     // Check if there is any area visible
-    if (dxs < width  && dxe > 0 &&
-        dys < height && dye > 0 &&
-        dxs < dxe    && dys < dye) {
+    if (dxs < width && dxe > 0 &&
+      dys < height && dye > 0 &&
+      dxs < dxe && dys < dye) {
 
-      val sourceData  = source.data
-      val destData    = data
+      val sourceData = source.data
+      val destData = data
       val sourceWidth = source.width
 
       if (!alpha) {
@@ -198,7 +198,7 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
           sy += 1
         }
 
-      } else  {
+      } else {
         // Alpha overlay
         var dy = dys
         var dx = dxs
@@ -230,8 +230,8 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
               destData(di) = 0
             } else {
               val r = (((sc >> 16) & 0xff) * sAlpha + (((dc >> 16) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
-              val g = (((sc >> 8)  & 0xff) * sAlpha + (((dc >> 8)  & 0xff) * dAlpha * inverseSAlpha) / 255) / a
-              val b = (((sc >> 0)  & 0xff) * sAlpha + (((dc >> 0)  & 0xff) * dAlpha * inverseSAlpha) / 255) / a
+              val g = (((sc >> 8) & 0xff) * sAlpha + (((dc >> 8) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
+              val b = (((sc >> 0) & 0xff) * sAlpha + (((dc >> 0) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
 
               // Set new color to destination
               destData(di) =
@@ -336,8 +336,8 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
 
         val sAlpha = (color >> 24) & 0xff
         val scr = ((color >> 16) & 0xff) * sAlpha
-        val scg = ((color >> 8)  & 0xff) * sAlpha
-        val scb = ((color >> 0)  & 0xff) * sAlpha
+        val scg = ((color >> 8) & 0xff) * sAlpha
+        val scb = ((color >> 0) & 0xff) * sAlpha
 
         while (ty < ye) {
           tx = xs
@@ -359,8 +359,8 @@ case class Raster(data: Array[Int], width: Int, height: Int) {
             }
             else {
               val r = (scr + (((dc >> 16) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
-              val g = (scg + (((dc >> 8)  & 0xff) * dAlpha * inverseSAlpha) / 255) / a
-              val b = (scb + (((dc >> 0)  & 0xff) * dAlpha * inverseSAlpha) / 255) / a
+              val g = (scg + (((dc >> 8) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
+              val b = (scb + (((dc >> 0) & 0xff) * dAlpha * inverseSAlpha) / 255) / a
 
               // Set new color to destination
               data(i) =

@@ -1,14 +1,15 @@
 package net.zzorn.utils
 
+import net.zzorn.utils.Raster
 import gfx.Raster
 import java.awt.image.{BufferedImage, DirectColorModel, MemoryImageSource}
-import java.awt.{Color, Graphics, Toolkit, Image}
 import ParameterChecker._
+import java.awt._
 
 /**
  * Fast, low level access image container.
  */
-class FastImage(val width: Int, val height: Int) {
+class RawImage(val width: Int, val height: Int) {
   requirePositive(width,  'width)
   requirePositive(height, 'height)
 
@@ -26,7 +27,7 @@ class FastImage(val width: Int, val height: Int) {
     imageSource = new MemoryImageSource(width, height, rgbColorModel, _raster.data, 0, width)
     imageSource.setAnimated(true)
 
-    _image = Toolkit.getDefaultToolkit().createImage(imageSource)
+    _image = Toolkit.getDefaultToolkit.createImage(imageSource)
 
     raster.clear()
   }
@@ -55,15 +56,7 @@ class FastImage(val width: Int, val height: Int) {
   }
 
   def createBufferedImage: BufferedImage = {
-    val buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
-
-    /*
-            val transparentRgbColorModel: DirectColorModel = new DirectColorModel(32, 0xff0000, 0x00ff00, 0x0000ff, 0xff000000)
-            val transparentImageSource = new MemoryImageSource(width, height, transparentRgbColorModel, imageData, 0, width)
-            val transparentImage = Toolkit.getDefaultToolkit().createImage(imageSource)
-    */
-
-    //        buf.getGraphics.drawImage(transparentImage, 0, 0, null)
+    val buf = ImageUtils.createScreenCompatibleImage(width, height, Transparency.TRANSLUCENT)
 
     _image.flush()
     buf.getGraphics.drawImage(_image, 0, 0, null)
