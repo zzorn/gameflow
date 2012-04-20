@@ -1,4 +1,4 @@
-= FlowGame =
+= gameflow =
 
 A simple scala 2D game library / basecode.
 
@@ -15,7 +15,7 @@ Unzip.
 
 == Usage ==
 
-See the net.zzorn.examples package for examples.
+See the net.zzorn.gameflow.examples package for examples.
 
 
 == Contact ==
