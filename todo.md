@@ -13,6 +13,8 @@
 3-> Mouse input
 
 
+Allow resiable game canvas?  Or make it non-resizable.
+
 GameMap
 * Order entities by supplied depth ordering when added, and when requested.  Optionally every update
 
