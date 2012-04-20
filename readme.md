@@ -1,4 +1,6 @@
-= Ludumdare 23 Warmup Game =
+= FlowGame =
+
+A simple java 2D game library / basecode.
 
 
 == License ==
@@ -13,8 +15,9 @@ Unzip.
 
 == Usage ==
 
+See the net.zzorn.examples package for examples.
 
 
-== Webpage & Contact ==
+== Contact ==
 
 zzorn at iki dot fi
