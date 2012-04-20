@@ -1,6 +1,22 @@
 package net.zzorn.utils
 
 import scala.math
+import java.util.Random
+
+object Vec3 {
+
+  private val r = new Random()
+
+  def random(): Vec3 = {
+    Vec3(r.nextDouble(), r.nextDouble(), r.nextDouble())
+  }
+
+  def random(seed: Long): Vec3 = {
+    r.setSeed(seed)
+    Vec3(r.nextDouble(), r.nextDouble(), r.nextDouble())
+  }
+
+}
 
 /**
  * Mutable 3D coordinate.

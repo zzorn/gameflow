@@ -1,5 +1,23 @@
 package net.zzorn.utils
 
+import java.util.Random
+import net.zzorn.utils.Vec3._
+
+object Vec2 {
+
+  private val r = new Random()
+
+  def random(): Vec2 = {
+    Vec2(r.nextDouble(), r.nextDouble())
+  }
+
+  def random(seed: Long): Vec2 = {
+    r.setSeed(seed)
+    Vec2(r.nextDouble(), r.nextDouble())
+  }
+
+}
+
 
 /**
  * Mutable 2D coordinate.

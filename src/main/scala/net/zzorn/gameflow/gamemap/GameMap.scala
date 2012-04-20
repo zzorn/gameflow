@@ -1,5 +1,6 @@
 package net.zzorn.gameflow.gamemap
 
+import camera.StationaryCamera
 import net.zzorn.gameflow.entity.Entity
 import scala.collection.JavaConversions._
 import java.util.{List, Collections, ArrayList}
@@ -7,16 +8,14 @@ import net.zzorn.utils.{Vec2, Vec3}
 import java.awt.{Color, Graphics2D}
 
 /**
- *
+ * Basic game map class.
  */
-trait GameMap {
+class GameMap(var camera: Camera = new StationaryCamera()) {
 
   private val _entities: ArrayList[Entity] = new ArrayList[Entity]()
   private val unmodifiableList: List[Entity] = Collections.unmodifiableList(_entities)
   private val screenPos = Vec2()
   private val worldPos = Vec3()
-
-  var camera: Camera = new StationaryCamera()
 
   def entities: java.util.List[Entity] = unmodifiableList
 
