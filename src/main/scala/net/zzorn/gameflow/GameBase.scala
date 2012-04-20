@@ -1,7 +1,6 @@
 package net.zzorn.gameflow
 
 import net.zzorn.utils._
-import net.zzorn.utils.gfx.Raster
 import picture.PictureManager
 import java.awt.{Graphics2D, Color}
 

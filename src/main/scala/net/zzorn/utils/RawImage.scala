@@ -1,7 +1,6 @@
 package net.zzorn.utils
 
 import net.zzorn.utils.Raster
-import gfx.Raster
 import java.awt.image.{BufferedImage, DirectColorModel, MemoryImageSource}
 import ParameterChecker._
 import java.awt._
