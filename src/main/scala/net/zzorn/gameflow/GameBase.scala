@@ -1,17 +1,15 @@
-package net.zzorn.ld23warmup
+package net.zzorn.gameflow
 
 import net.zzorn.utils.gfx.Raster
 import net.zzorn.utils.{ParameterChecker, Area, FastImagePanel, SimpleFrame}
-import javax.swing.SwingUtilities
-import com.sun.java.swing.SwingUtilities3
-import sun.swing.SwingUtilities2
+import java.awt.{Color, Graphics2D}
 
 /**
  * Extend this in an object, and implement update, render, and optionally setup and shutdown.
  */
 // TODO: Map background drawing, cache background to raster, update on change or resize, draw from background when sprites move on foreground
 // TODO: Checkout double buffering tutorial http://www.cokeandcode.com/info/tut2d.html  http://content.gpwiki.org/index.php/Java:Tutorials:Double_Buffering  http://docs.oracle.com/javase/tutorial/extra/fullscreen/doublebuf.html
-class GameBase(initialTargetFps: Double = 30.0) {
+class GameBase(title: String = "GameFlow", initialTargetFps: Double = 200.0, defaultWidth: Int = 800, defaultHeight: Int = 600) {
 
   private val SecondsToNanoseconds: Double = 1000000000.0
   private val NanosecondsToSeconds: Double = 1.0 / SecondsToNanoseconds
@@ -20,7 +18,7 @@ class GameBase(initialTargetFps: Double = 30.0) {
   private var running = false
   private var lastTimestamp = 0L
   private var _frame: SimpleFrame = null
-  private var _screenPanel: FastImagePanel = null
+  private var _canvas: GameCanvas = null
   private var _currentFps: Double = 0.0
   private var _targetFps: Double = 0.0
 
@@ -33,8 +31,7 @@ class GameBase(initialTargetFps: Double = 30.0) {
     start()
   }
 
-  def screen: Raster = _screenPanel.raster
-  def screenPanel: FastImagePanel = _screenPanel
+  def canvas: GameCanvas = _canvas
   def frame: SimpleFrame = _frame
   def currentFps: Double = _currentFps
   def targetFps = _targetFps
@@ -59,10 +56,17 @@ class GameBase(initialTargetFps: Double = 30.0) {
 
         update(duration)
 
-        render(screen)
+        var surface: Graphics2D = canvas.acceleratedSurface
+        surface.setColor(Color.black);
+        surface.fillRect(0,0,800,600);
 
-        // Force a repaint that copies the rendered screen raster to the visible screen
-        _screenPanel.repaint()
+        render(surface)
+
+        // We'll need to manually dispose the graphics
+        surface.dispose()
+
+        // Flip the page, and show rendered graphics
+        canvas.flipPage()
       }
 
       shutdown()
@@ -89,9 +93,9 @@ class GameBase(initialTargetFps: Double = 30.0) {
 
   /**
    * Render the game contents to the specified screen raster.
-   * @param screen the screen to render to.  May change if the view is resized.
+   * @param screen the graphics to render to.
    */
-  protected def render(screen: Raster) {}
+  protected def render(screen: Graphics2D) {}
 
   /**
    * Called after the mainloop has terminated, and before the program exits.
@@ -102,9 +106,9 @@ class GameBase(initialTargetFps: Double = 30.0) {
 
 
   private def createScreen() {
-    _screenPanel = new FastImagePanel()
-    _frame = new SimpleFrame("LD 23 Warmup - Pyramid Escape", _screenPanel)
-    _screenPanel.buildFastImage()
+    _canvas = new GameCanvas()
+    _frame = new SimpleFrame(title, _canvas, defaultWidth, defaultHeight)
+    _canvas.setup()
   }
 
 
@@ -114,7 +118,7 @@ class GameBase(initialTargetFps: Double = 30.0) {
     if (lastTimestamp != 0) {
       val targetFrameDurationNs = (SecondsToNanoseconds / targetFps).toLong
       val actualFrameDurationNs = lastTimestamp - System.nanoTime()
-      val requiredDelayMs = (targetFrameDurationNs - actualFrameDurationNs) * NanosecondsToMilliseconds
+      val requiredDelayMs = math.max(1, (targetFrameDurationNs - actualFrameDurationNs) * NanosecondsToMilliseconds)
       //Thread.sleep(requiredDelayMs.toLong)
       Thread.sleep(1)
     }

@@ -98,19 +98,19 @@ object ColorUtils {
    *      Convert a Hue Saturation Lightness color to Red Green Blue color space.
    *      Algorithm based on the one in wikipedia ( http://en.wikipedia.org/wiki/HSL_color_space )
    */
-  def HSLtoRGB(hue: Float, saturation: Float, lightness: Float): (Float, Float, Float) = {
+  def HSLtoRGB(hue: Float, saturation: Float, lightness: Float, alpha: Float = 1.0f): Int = {
 
     if (lightness == 0) {
       // Black
-      (0, 0, 0)
+      createRGBAColor(0,0,0, alpha)
     }
     else if (lightness == 1) {
       // White
-      (1, 1, 1)
+      createRGBAColor(1,1,1, alpha)
     }
     else if (saturation == 0) {
       // Greyscale
-      (lightness, lightness, lightness)
+      createRGBAColor(lightness,lightness,lightness, alpha)
     }
     else {
       // Arbitrary color
@@ -125,11 +125,12 @@ object ColorUtils {
         return p
       }
 
+      val h = hue % 1.0f
       val q = if (lightness < 0.5f) (lightness * (1f + saturation)) else (lightness + saturation - lightness * saturation)
       val p = 2 * lightness - q;
-      var r = hueToColor(p, q, hue + 1f / 3f)
-      var g = hueToColor(p, q, hue)
-      var b = hueToColor(p, q, hue - 1f / 3f)
+      var r = hueToColor(p, q, h + 1f / 3f)
+      var g = hueToColor(p, q, h)
+      var b = hueToColor(p, q, h - 1f / 3f)
 
       // Clamp
       if (r < 0f) r = 0f
@@ -141,7 +142,10 @@ object ColorUtils {
       if (b < 0f) b = 0f
       else if (b > 1f) b = 1f
 
-      (r, g, b)
+      return  (((255 * alpha).toInt & 0xFF) << 24) |
+              (((255 * r).toInt & 0xFF) << 16) |
+              (((255 * g).toInt & 0xFF) << 8) |
+              (((255 * b).toInt & 0xFF) << 0)
     }
   }
 

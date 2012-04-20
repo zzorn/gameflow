@@ -20,8 +20,7 @@ object PyramidWarmup extends GameBase {
   def hueFilter(alphaFactor: Float = 0f)(raster: Raster, x: Int, y: Int, color: Int): Int = {
     val rx = 1.0f * x / raster.width
     val ry = 1.0f * y / raster.height
-    val (r, g, b) = ColorUtils.HSLtoRGB(rx, ry, 0.5f)
-    ColorUtils.createRGBAColor(r, g, b, 1.0f - rx * alphaFactor)
+    ColorUtils.HSLtoRGB(rx, ry, 0.5f, 1.0f - rx * alphaFactor)
   }
 
   override protected def setup() {
