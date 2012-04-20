@@ -10,7 +10,8 @@ GPL 3.0.
 
 == Installation ==
 
-Unzip.
+For now, download git clone, compile with sbt.
+Will tag and upload precompiled jars when it's more complete.
 
 
 == Usage ==
