@@ -1,6 +1,6 @@
 = FlowGame =
 
-A simple java 2D game library / basecode.
+A simple scala 2D game library / basecode.
 
 
 == License ==
