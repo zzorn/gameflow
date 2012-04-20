@@ -1,4 +1,4 @@
-package net.zzorn.gameflow.example.movement
+package net.zzorn.gameflow.examples.movement
 
 import scala.math
 import java.awt.{Graphics2D, Color}

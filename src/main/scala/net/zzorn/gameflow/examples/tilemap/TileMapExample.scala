@@ -1,4 +1,4 @@
-package net.zzorn.gameflow.example.tilemap
+package net.zzorn.gameflow.examples.tilemap
 
 import net.zzorn.gameflow.GameBase
 import java.awt.Graphics2D
