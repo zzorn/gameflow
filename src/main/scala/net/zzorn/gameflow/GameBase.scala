@@ -26,6 +26,8 @@ class GameBase(title: String = "GameFlow",
   final private var _currentFps: Double = 0.0
   final private var _targetFps: Double = 0.0
 
+
+
   final private val _pictureStore: PictureManager = new PictureManager(picturePath)
 
   targetFps = initialTargetFps
