@@ -1,6 +1,6 @@
-name := "ld23warmup"
+name := "gameflow"
 
-version := "1.0"
+version := "0.1"
 
 scalaVersion := "2.9.1"
 
