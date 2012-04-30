@@ -3,17 +3,17 @@ package org.gameflow.state
 import org.gameflow.Updating
 import org.gameflow.Game
 import org.gameflow.Rendering
+import org.gameflow.component.Componentized
 
 
 /**
  * 
  */
-public trait GameState<G: Game<G>> : Updating, Rendering {
+public trait GameState: Componentized {
 
     val name: String
-    val game: G
 
-    fun onEnter(game: G)
-    fun onExit(game: G)
+    fun onEnter(game: Game)
+    fun onExit(game: Game)
 
 }

@@ -5,31 +5,29 @@ import java.util.Map
 import java.util.HashMap
 import org.gameflow.state.GameState
 import org.gameflow.util.ListenableCollection
+import java.util.concurrent.ConcurrentHashMap
+import org.gameflow.state.StateManager
+import org.gameflow.state.StateManagerImpl
+import org.gameflow.component.ComponentizedBase
+import org.gameflow.entity.EntityGroup
+import org.gameflow.entity.EntityGroupsImpl
+import org.gameflow.entity.EntityGroups
+import java.util.ArrayList
+import org.gameflow.pass.EntityPass
 
 /**
  * 
  */
-// TODO: When 'This' is supported, remove G from constructor and replace uses of G with This
-public open class Game<G: Game<G>>() : Faceted<G>, Updating, Rendering {
+public open class Game(
+        private val stateManager: StateManager = StateManagerImpl()
+    ):
+        ComponentizedBase(),
+        EntityGroups by EntityGroupsImpl(),
+        StateManager by stateManager {
 
-    private val gameStates: Map<String, GameState<G>> = HashMap<String, GameState<G>>()
-    private var activeGameState: GameState<G>? = null
-    private var newGameStateName: String? = null
+    public val entityPasses: List<EntityPass> = ArrayList<EntityPass>()
+
     private var stopped = false
-
-    public override val facets : ListenableCollection<Component<G>> = ListenableCollection<Component<G>>()
-
-    fun addState(gameState: GameState<G>) {
-        gameStates.put(gameState.name, gameState)
-    }
-
-    fun removeState(gameState: GameState<G>) {
-        gameStates.remove(gameState.name)
-    }
-
-    fun changeGameState(newStateName: String) {
-        newGameStateName = newStateName
-    }
 
     /** Calls init, then starts the game loop.  Call stop to exit it. */
     public final fun start() {
@@ -38,51 +36,19 @@ public open class Game<G: Game<G>>() : Faceted<G>, Updating, Rendering {
         }
     }
 
+    public final fun stop() {
+        stopped = true
+    }
+
     /** Runs through the game loop once. */
     public final fun doLoop() {
+        // Change game state if needed
+        stateManager.doGameStateUpdate(this)
 
-    }
-
-    public final fun doUpdate(seconds: Double) {
-        updateGameState(seconds)
-        updateFacets(seconds)
-        update(seconds)
-    }
-
-    public final fun doRender(r : RenderContext) {
-        renderGameState(r)
-        renderFacets(r)
-        render(r)
-    }
-
-    override fun update(seconds : Double) {}
-    override fun render(r : RenderContext) {}
-
-    private fun renderGameState(r: RenderContext) {
-        // Render current game state if present
-        activeGameState?.render(r)
-    }
-
-    private fun updateGameState(seconds : Double) {
-        // Check if game state changed
-        if (newGameStateName != null) {
-            // Get new game state, null the change variable in case the onExit or onEnter methods immediately change the game state again.
-            val newStateName = newGameStateName
-            newGameStateName = null
-
-            // Switch to new game state
-            val gameState = gameStates.get(newStateName)
-            if (gameState == null) throw Exception("No game state named '$newStateName' found.")
-            else {
-                activeGameState?.onExit(this as G)
-                activeGameState = gameState
-                activeGameState?.onEnter(this as G)
-            }
+        // Run passes in order
+        for (pass in entityPasses) {
+            // Apply pass to each entity group
         }
-
-        // Update current game state
-        activeGameState?.update(seconds)
     }
-
 
 }

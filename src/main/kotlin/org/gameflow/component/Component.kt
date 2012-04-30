@@ -1,4 +1,4 @@
-package org.gameflow
+package org.gameflow.component
 
 /**
  * 
