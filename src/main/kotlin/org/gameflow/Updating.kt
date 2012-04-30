@@ -3,9 +3,8 @@ package org.gameflow
 /**
  * 
  */
-public trait Facet {
+public trait Updating {
 
     fun update(seconds: Double)
-
 
 }
