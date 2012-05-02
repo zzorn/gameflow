@@ -1,11 +1,12 @@
 package org.gameflow.component
 
 import java.util.concurrent.ConcurrentHashMap
+import org.gameflow.pass.Passable
 
 /**
  * 
  */
-public trait Componentized {
+public trait Componentized: Passable {
 
     private val components: ConcurrentHashMap<Class<Component>, Component>
 

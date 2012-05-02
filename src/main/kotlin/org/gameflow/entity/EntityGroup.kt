@@ -7,16 +7,17 @@ import org.gameflow.RenderContext
 import java.util.concurrent.ConcurrentSkipListSet
 import java.util.Collections
 import org.gameflow.component.Component
+import org.gameflow.pass.Passable
 
 /**
  * A group of entities.
  */
-public open class EntityGroup {
+public open class EntityGroup(name: String): Passable {
 
     private val entities = ConcurrentSkipListSet<Entity>()
-    private val unmodifiableEntities: Collection<Entity> = Collections.unmodifiableCollection<Entity>(entities) !!
+    private val unmodifiableEntities: Collection<out Entity> = Collections.unmodifiableCollection<Entity>(entities) !!
 
-    public final fun entities() : Collection<Entity> {
+    public final fun entities() : Collection<out Entity> {
         return unmodifiableEntities
     }
 
@@ -35,9 +36,10 @@ public open class EntityGroup {
         entities.clear()
     }
 
+    override fun containedPassables() : Collection<out Passable> = unmodifiableEntities
 
     protected open fun onEntityAdded(entity: Entity) {}
     protected open fun onEntityRemoved(entity: Entity) {}
-    protected open fun onAllEntitiesRemoved(entities: Collection<Entity>) {}
+    protected open fun onAllEntitiesRemoved(entities: Collection<out Entity>) {}
 
 }

@@ -3,6 +3,7 @@ package org.gameflow.state
 import org.gameflow.state.GameState
 import java.util.concurrent.ConcurrentHashMap
 import org.gameflow.Game
+import java.util.Collection
 
 /**
  * Keeps track of game states, of which one is active at a time.
@@ -27,7 +28,10 @@ public class StateManagerImpl(): StateManager {
         newGameStateName = newStateName
     }
 
-    public fun doGameStateChange(game: Game) {
+    override fun states(): Collection<GameState> = gameStates.values() !!;
+
+
+    override fun doGameStateUpdate(game : Game) {
         // Check if game state changed
         if (newGameStateName != null) {
             // Get new game state, null the change variable in case the onExit or onEnter methods immediately change the game state again.

@@ -4,6 +4,9 @@ import org.gameflow.entity.Entity
 import org.gameflow.state.GameState
 import org.gameflow.Game
 import org.gameflow.component.Componentized
+import org.gameflow.entity.EntityGroup
+import java.util.Collection
+import org.gameflow.entity.EntityGroups
 
 
 /**
@@ -11,12 +14,21 @@ import org.gameflow.component.Componentized
  */
 trait EntityPass {
 
-    fun applyToGroup(name: String) : Boolean
-    fun applyToEntity(entity: Entity) : Boolean
-    fun applyToState(state: GameState) : Boolean
-    fun applyToGame(game: Game) : Boolean
+    open fun shouldApply(passable: Passable) : Boolean = true
 
     fun startPass()
     fun apply(componentized: Componentized)
     fun endPass()
+
+    fun runPasses(passables: Iterator<out Passable>) {
+        while (passables.hasNext) {
+            runPass(passables.next())
+        }
+    }
+
+    fun runPass(passable: Passable) {
+        if (passable is Componentized && shouldApply(passable)) apply(passable)
+
+        runPasses(passable.containedPassables())
+    }
 }

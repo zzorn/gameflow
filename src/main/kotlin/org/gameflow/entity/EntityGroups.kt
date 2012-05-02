@@ -1,12 +1,18 @@
 package org.gameflow.entity
 
+import java.util.Collection
+import org.gameflow.pass.Passable
+
 /**
  * 
  */
-public trait EntityGroups {
+public trait EntityGroups: Passable {
 
-    public fun iterator(): java.util.Iterator<EntityGroup>
-    public fun create(name: String) : EntityGroup
-    public fun get(name: String) : EntityGroup
-    public fun contains(name: String): Boolean
+    public fun groups(): Collection<EntityGroup>
+    public fun createGroup(name: String) : EntityGroup
+    public fun getGroup(name: String) : EntityGroup
+    public fun containsGroup(name: String): Boolean
+
+    override fun containedPassables() : Iterator<out Passable> = groups().iterator() !!
+
 }

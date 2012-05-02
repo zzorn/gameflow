@@ -14,20 +14,28 @@ import org.gameflow.entity.EntityGroupsImpl
 import org.gameflow.entity.EntityGroups
 import java.util.ArrayList
 import org.gameflow.pass.EntityPass
+import java.util.Collection
+import org.gameflow.pass.Passable
 
 /**
  * 
  */
 public open class Game(
-        private val stateManager: StateManager = StateManagerImpl()
+        public val stateManager: StateManager = StateManagerImpl(),
+        public val groups : EntityGroups = EntityGroupsImpl()
     ):
         ComponentizedBase(),
-        EntityGroups by EntityGroupsImpl(),
-        StateManager by stateManager {
+        StateManager by stateManager  {
 
     public val entityPasses: List<EntityPass> = ArrayList<EntityPass>()
 
     private var stopped = false
+
+    override fun containedPassables() : Collection<Passable> {
+        return groups.containedPassables()
+    }
+
+
 
     /** Calls init, then starts the game loop.  Call stop to exit it. */
     public final fun start() {
