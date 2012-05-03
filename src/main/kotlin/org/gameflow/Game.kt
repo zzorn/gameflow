@@ -13,7 +13,7 @@ import org.gameflow.entity.EntityGroup
 import org.gameflow.entity.EntityGroupsImpl
 import org.gameflow.entity.EntityGroups
 import java.util.ArrayList
-import org.gameflow.pass.EntityPass
+import org.gameflow.pass.Pass
 import java.util.Collection
 import org.gameflow.pass.Passable
 
@@ -27,7 +27,7 @@ public open class Game(
         ComponentizedBase(),
         StateManager by stateManager  {
 
-    public val entityPasses: List<EntityPass> = ArrayList<EntityPass>()
+    public val entityPasses: List<Pass> = ArrayList<Pass>()
 
     private var stopped = false
 

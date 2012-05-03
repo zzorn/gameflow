@@ -12,23 +12,10 @@ import org.gameflow.entity.EntityGroups
 /**
  * Something that processes all entities matching specified criteria each game loop, or at some other intervals.
  */
-trait EntityPass {
-
-    open fun shouldApply(passable: Passable) : Boolean = true
+trait Pass {
 
     fun startPass()
     fun apply(componentized: Componentized)
     fun endPass()
 
-    fun runPasses(passables: Iterator<out Passable>) {
-        while (passables.hasNext) {
-            runPass(passables.next())
-        }
-    }
-
-    fun runPass(passable: Passable) {
-        if (passable is Componentized && shouldApply(passable)) apply(passable)
-
-        runPasses(passable.containedPassables())
-    }
 }
