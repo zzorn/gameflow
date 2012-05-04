@@ -1,6 +1,8 @@
 package org.gameflow.entity
 
 import java.util.HashMap
+import org.gameflow.pass.Pass
+import org.gameflow.Game
 
 /**
  * 
@@ -26,4 +28,9 @@ public class EntityGroupsImpl: EntityGroups {
     public override fun containsGroup(name: String): Boolean = entityGroups.containsKey(name)
 
 
+    override fun doPassOnChildren(pass : Pass, game : Game) {
+        for (group in entityGroups.values()) {
+            group.doPass(pass, game)
+        }
+    }
 }

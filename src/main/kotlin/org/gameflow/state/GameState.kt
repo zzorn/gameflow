@@ -3,14 +3,15 @@ package org.gameflow.state
 import org.gameflow.Updating
 import org.gameflow.Game
 import org.gameflow.Rendering
-import org.gameflow.component.Componentized
 import org.gameflow.entity.EntityGroups
+import org.gameflow.pass.Pass
+import org.gameflow.entity.Entity
 
 
 /**
  * 
  */
-public trait GameState: Componentized {
+public trait GameState: Entity {
 
     val entityGroups: EntityGroups
 

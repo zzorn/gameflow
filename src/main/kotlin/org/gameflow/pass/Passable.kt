@@ -1,20 +1,20 @@
 package org.gameflow.pass
 
 import java.util.Collection
-import org.gameflow.component.Componentized
+import org.gameflow.entity.Entity
+import org.gameflow.Game
 
 /**
  * Something that can be processed by an entity pass.
  */
 public trait Passable {
 
-    fun doPass(pass: Pass) {
-        if (this is Componentized) pass.apply(this)
+    fun doPass(pass: Pass, game: Game) {
+        if (this is Entity) pass.apply(this, game)
 
-
-        pass.
+        doPassOnChildren(pass, game)
     }
 
-    fun
+    fun doPassOnChildren(pass: Pass, game: Game) {}
 
 }

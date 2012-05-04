@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentSkipListSet
 import java.util.Collections
 import org.gameflow.component.Component
 import org.gameflow.pass.Passable
+import org.gameflow.pass.Pass
+import org.gameflow.Game
 
 /**
  * A group of entities.
@@ -36,10 +38,14 @@ public open class EntityGroup(name: String): Passable {
         entities.clear()
     }
 
-    override fun containedPassables() : Collection<out Passable> = unmodifiableEntities
-
     protected open fun onEntityAdded(entity: Entity) {}
     protected open fun onEntityRemoved(entity: Entity) {}
     protected open fun onAllEntitiesRemoved(entities: Collection<out Entity>) {}
 
+
+    override fun doPassOnChildren(pass : Pass, game : Game) {
+        for (entity in entities) {
+            entity.doPass(pass, game)
+        }
+    }
 }

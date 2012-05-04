@@ -1,7 +1,6 @@
 package org.gameflow.util
 
 import java.util.Set
-import org.gameflow.Component
 import java.util.LinkedHashSet
 import java.util.HashSet
 import java.util.List

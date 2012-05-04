@@ -4,6 +4,7 @@ import org.gameflow.state.GameState
 import java.util.concurrent.ConcurrentHashMap
 import org.gameflow.Game
 import java.util.Collection
+import org.gameflow.pass.Pass
 
 /**
  * Keeps track of game states, of which one is active at a time.
@@ -50,4 +51,7 @@ public class StateManagerImpl(): StateManager {
     }
 
 
+    override fun doPassOnChildren(pass : Pass, game: Game) {
+        currentGameState?.doPass(pass, game)
+    }
 }
