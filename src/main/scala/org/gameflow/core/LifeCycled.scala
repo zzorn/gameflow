@@ -21,7 +21,6 @@ trait LifeCycled {
 
   /**Called once, when the component or game is initializing. */
   final def init(game: Game) {
-    println("Initializing " + this)
     if (deInitialized) throw new Error("The class " + this + " has been de-initialized, can not re-initialize")
     else if (initialized) throw new Error("The class " + this + " is already initialized, can not re-initialize")
     else {

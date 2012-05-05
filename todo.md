@@ -58,5 +58,12 @@ GameMap
 
 
 
+Reference links:
+================
+
+Double buffering:
+* http://www.cokeandcode.com/info/tut2d.html
+* http://content.gpwiki.org/index.php/Java:Tutorials:Double_Buffering
+* http://docs.oracle.com/javase/tutorial/extra/fullscreen/doublebuf.html
 
 

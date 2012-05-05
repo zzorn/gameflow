@@ -1,12 +1,12 @@
 package org.gameflow.java2D.rendering
 
 import org.gameflow.core.pass.Pass
-import org.gameflow.core.Game
 import org.gameflow.core.entity.Entity
 import java.awt.{Graphics2D, Color}
 import org.gameflow.utils.{Vec3, SimpleFrame}
 import org.gameflow.java2D.camera.{StationaryCamera, Camera}
 import org.gameflow.java2D.physics.Location
+import org.gameflow.core.{GameBase, Game}
 
 /**
  * A render pass for java 2D renderable entities.
@@ -35,7 +35,7 @@ class RenderPass(windowTitle: String = "",
 
   override def startPass(game: Game) {
     // Update camera if we have one
-    if (camera != null) camera.update(game.clock)
+    if (camera != null) camera.update(game.asInstanceOf[GameBase].clock)
 
     // Get surface to draw on
     surface = canvas.acceleratedSurface

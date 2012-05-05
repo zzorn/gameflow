@@ -1,9 +1,12 @@
 package org.gameflow.core.clock
 
+import org.gameflow.core.{Game, Manager}
+
+
 /**
  * Game clock, used to calculate frame duration, and do frame delays.
  */
-trait Clock {
+trait Clock extends Manager {
 
   protected final val SecondsToNanoseconds: Double = 1E9
   protected final val NanosecondsToSeconds: Double = 1E-9
@@ -89,4 +92,7 @@ trait Clock {
    */
   def getCurrentNanoTime: Long = System.nanoTime()
 
+  override final def update(game: Game) {
+    tick()
+  }
 }

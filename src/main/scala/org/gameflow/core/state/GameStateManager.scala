@@ -2,14 +2,14 @@ package org.gameflow.core.state
 
 import java.util.concurrent.ConcurrentHashMap
 import org.gameflow.core.pass.{Passable, Pass}
-import org.gameflow.core.{LifeCycled, Game}
 import scala.collection.JavaConversions._
+import org.gameflow.core.{Manager, LifeCycled, Game}
 
 
 /**
  * Keeps track of game states, of which one is active at a time.
  */
-final class GameStateManager extends Passable with LifeCycled {
+final class GameStateManager extends Passable with Manager {
 
   private val gameStates = new ConcurrentHashMap[Symbol, GameState]()
   private var newGameStateName: Symbol = null
@@ -66,5 +66,9 @@ final class GameStateManager extends Passable with LifeCycled {
 
   override def doPassOnChildren(pass : Pass, game: Game) {
     if (_currentGameState != null) _currentGameState.doPass(pass, game)
+  }
+
+  override def update(game: Game) {
+    doGameStateUpdate(game)
   }
 }

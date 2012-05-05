@@ -2,8 +2,8 @@ package org.gameflow.core.entity
 
 import java.util.HashMap
 import org.gameflow.core.pass.Pass
-import org.gameflow.core.Game
 import scala.collection.JavaConversions._
+import org.gameflow.core.{Manager, Game}
 
 /**
  *

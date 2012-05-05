@@ -2,13 +2,13 @@ package org.gameflow.core.pass
 
 import java.util.concurrent.ConcurrentSkipListSet
 import scala.collection.JavaConversions._
-import org.gameflow.core.{Game, LifeCycled}
 import java.util.{ArrayList, Collections}
+import org.gameflow.core.{Manager, Game, LifeCycled}
 
 /**
  * Keeps track of passes, and initializes them.
  */
-class PassManager extends LifeCycled {
+class PassManager extends Manager {
 
   private val _passes = new ArrayList[Pass]()
 
@@ -48,5 +48,9 @@ class PassManager extends LifeCycled {
 
       pass.endPass(game)
     }
+  }
+
+  override def update(game: Game) {
+    runPasses(game)
   }
 }

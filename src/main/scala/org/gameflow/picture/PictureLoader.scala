@@ -9,7 +9,8 @@ import org.gameflow.utils.ImageUtils
 /**
  * Loads pictures and caches them.
  */
-class PictureManager(picturePath: String = "") {
+// TODO: Generalize to handle other content?
+class PictureLoader(picturePath: String = "") {
 
   private val pictures: HashMap[String, Picture] = new HashMap[String, Picture]()
 

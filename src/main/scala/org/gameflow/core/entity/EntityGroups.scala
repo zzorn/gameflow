@@ -1,12 +1,12 @@
 package org.gameflow.core.entity
 
 import org.gameflow.core.pass.Passable
-import org.gameflow.core.LifeCycled
+import org.gameflow.core.{Manager, LifeCycled}
 
 /**
  *
  */
-trait EntityGroups extends Passable with LifeCycled {
+trait EntityGroups extends Passable with Manager {
 
   def groups(): java.util.Collection[EntityGroup]
   def createGroup(name: Symbol) : EntityGroup
